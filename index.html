@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#ffe3f0;--bg2:#e6dcff;--ink:#4a2f6b;--soft:#7a5f9a;--pink:#ff7eb6;--lav:#b9a3ff;--mint:#a8ecd0;--sun:#ffe27a;--card:rgba(255,255,255,.75);--cake:#fff4e8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2b1745;--bg2:#1c1033;--ink:#ffeaf5;--soft:#d6c3f2;--card:rgba(255,255,255,.1);--cake:#ffe9d6}}
+:root[data-theme="dark"]{--bg1:#2b1745;--bg2:#1c1033;--ink:#ffeaf5;--soft:#d6c3f2;--card:rgba(255,255,255,.1);--cake:#ffe9d6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:'Fredoka',system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));background-color:var(--bg2);text-align:center;overflow-x:hidden}
+main{max-width:480px;margin:0 auto;padding:28px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:18px;position:relative;z-index:2}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+h1{font-size:clamp(2.2rem,11vw,3.4rem);line-height:1.05;margin:8px 0 0;font-weight:700}
+.name{display:inline-block;color:var(--pink);animation:bob 2.4s ease-in-out infinite}
+.hand{font-family:'Caveat',cursive;font-size:1.7rem;color:var(--soft);margin:0}
+.name-in{font:inherit;font-size:1rem;text-align:center;color:var(--ink);background:var(--card);border:2px dashed var(--lav);border-radius:99px;padding:8px 16px;width:200px}
+.name-in:focus-visible,button:focus-visible,.cake:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
+.cake{all:unset;cursor:pointer;display:block;margin:14px 0 6px;position:relative;width:220px;height:210px;-webkit-tap-highlight-color:transparent}
+.layer{position:absolute;left:50%;transform:translateX(-50%);border-radius:18px 18px 12px 12px}
+.l3{bottom:0;width:220px;height:62px;background:var(--pink)}
+.l2{bottom:56px;width:168px;height:56px;background:var(--lav)}
+.l1{bottom:106px;width:116px;height:50px;background:var(--mint)}
+.cake .layer::before{content:"";position:absolute;inset:0 0 auto 0;height:20px;border-radius:18px 18px 0 0;background:var(--cake);
+-webkit-mask:radial-gradient(circle 9px at 12px 16px,#0000 98%,#000) -6px 0/24px 100%;mask:radial-gradient(circle 9px at 12px 16px,#0000 98%,#000) -6px 0/24px 100%}
+.cake .layer::after{content:"";position:absolute;left:14%;right:14%;bottom:12px;height:8px;border-radius:9px;background:repeating-linear-gradient(90deg,var(--sun) 0 8px,transparent 8px 20px);opacity:.9}
+.candle{position:absolute;left:50%;bottom:154px;width:12px;height:34px;margin-left:-6px;border-radius:5px;background:repeating-linear-gradient(135deg,#fff 0 6px,var(--pink) 6px 12px)}
+.flame{position:absolute;left:50%;bottom:186px;width:16px;height:26px;margin-left:-8px;border-radius:50% 50% 50% 50%/65% 65% 35% 35%;background:radial-gradient(circle at 50% 70%,#fff6c4,var(--sun) 50%,#ff9d4d);box-shadow:0 0 22px 8px rgba(255,200,80,.55);transform-origin:50% 100%;animation:flick .5s ease-in-out infinite alternate;transition:opacity .35s,transform .35s}
+.out .flame{opacity:0;transform:scale(.2);animation:none}
+.smoke{position:absolute;left:50%;bottom:190px;font-size:1.3rem;opacity:0;margin-left:-9px}
+.out .smoke{animation:puff 1.4s ease-out}
+.hint{font-size:1.05rem;color:var(--soft);margin:0;animation:bob 2s ease-in-out infinite}
+.wish{background:var(--card);border-radius:28px;padding:22px 22px 20px;border:2px solid var(--lav);box-shadow:0 10px 30px rgba(120,80,180,.18);max-width:100%;display:none}
+.wish.show{display:block;animation:pop .6s cubic-bezier(.2,1.5,.4,1)}
+.wish p{margin:0;font-size:1.1rem;line-height:1.55}
+.wish .sig{font-family:'Caveat',cursive;font-size:1.7rem;color:var(--pink);margin-top:10px}
+button.more{font:inherit;font-weight:600;font-size:1.05rem;color:#fff;background:var(--pink);border:0;border-radius:99px;padding:13px 26px;cursor:pointer;box-shadow:0 6px 0 #d9548f;display:none}
+button.more.show{display:inline-block}
+button.more:active{transform:translateY(4px);box-shadow:0 2px 0 #d9548f}
+.deco{position:fixed;font-size:1.6rem;z-index:1;animation:bob 3s ease-in-out infinite;pointer-events:none}
+@keyframes flick{from{transform:rotate(-4deg) scaleY(1)}to{transform:rotate(4deg) scaleY(1.12)}}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes pop{from{opacity:0;transform:scale(.6) translateY(20px)}}
+@keyframes puff{0%{opacity:.8;transform:translateY(0)}100%{opacity:0;transform:translateY(-50px) scale(1.8)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<span class="deco" style="top:12%;left:7%">🎈</span>
+<span class="deco" style="top:18%;right:8%;animation-delay:.8s">🎀</span>
+<span class="deco" style="bottom:12%;left:9%;animation-delay:1.2s">🧁</span>
+<span class="deco" style="bottom:16%;right:8%;animation-delay:.4s">🎁</span>
+<main>
+  <p class="hand">psst… it's your day!</p>
+  <h1>Happy Birthday,<br><span class="name" id="who">Bestie</span>!</h1>
+  <input class="name-in" id="nameIn" maxlength="20" placeholder="Type a name" aria-label="Birthday person's name">
+  <button class="cake" id="cake" aria-label="Blow out the candle and make a wish">
+    <span class="layer l3"></span><span class="layer l2"></span><span class="layer l1"></span>
+    <span class="candle"></span><span class="flame"></span><span class="smoke">💨</span>
+  </button>
+  <p class="hint" id="hint">Tap the candle to make a wish</p>
+  <section class="wish" id="wish" aria-live="polite">
+    <p>Hope your day is packed with cake, laughter, and all the people who make you smile. You deserve every bit of the fun. May this new year bring you big adventures, little joys, and wishes that actually come true. 💖</p>
+    <div class="sig">With lots of love ♡</div>
+  </section>
+  <button class="more" id="more">More confetti! 🎉</button>
+</main>
+<script>
+(function(){
+var cv=document.getElementById('c'),ctx=cv.getContext('2d'),P=[],run=false;
+var colors=['#ff7eb6','#b9a3ff','#a8ecd0','#ffe27a','#ff9d4d','#7fd1ff'];
+var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function size(){var d=window.devicePixelRatio||1;cv.width=innerWidth*d;cv.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0)}
+size();addEventListener('resize',size);
+function burst(x,y,n,spread){
+  n=calm?Math.round(n/4):n;
+  for(var i=0;i<n;i++){
+    var a=-Math.PI/2+(Math.random()-.5)*spread,s=6+Math.random()*10;
+    P.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,w:6+Math.random()*7,h:4+Math.random()*5,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:colors[i%colors.length],round:Math.random()<.3,life:0});
+  }
+  if(!run){run=true;requestAnimationFrame(tick)}
+}
+function tick(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  for(var i=P.length-1;i>=0;i--){
+    var p=P[i];p.vy+=.28;p.vx*=.99;p.vy*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life++;
+    if(p.y>innerHeight+30||p.life>260){P.splice(i,1);continue}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.globalAlpha=Math.min(1,(260-p.life)/60);
+    if(p.round){ctx.beginPath();ctx.arc(0,0,p.h/1.4,0,7);ctx.fill()}else ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+    ctx.restore();
+  }
+  if(P.length)requestAnimationFrame(tick);else{run=false;ctx.clearRect(0,0,innerWidth,innerHeight)}
+}
+function rain(){burst(innerWidth*.15,innerHeight,40,1.1);burst(innerWidth*.85,innerHeight,40,1.1);burst(innerWidth/2,innerHeight*.9,50,1.6)}
+var cake=document.getElementById('cake'),wish=document.getElementById('wish'),more=document.getElementById('more'),hint=document.getElementById('hint');
+cake.addEventListener('click',function(){
+  if(cake.classList.contains('out'))return;
+  cake.classList.add('out');
+  var r=cake.getBoundingClientRect();
+  burst(r.left+r.width/2,r.top+30,90,2.6);
+  setTimeout(rain,350);
+  hint.textContent='Your wish is on its way ✨';
+  wish.classList.add('show');more.classList.add('show');
+  setTimeout(function(){wish.scrollIntoView({behavior:calm?'auto':'smooth',block:'center'})},500);
+});
+more.addEventListener('click',rain);
+var inp=document.getElementById('nameIn'),who=document.getElementById('who');
+try{var q=new URLSearchParams(location.search).get('name');if(q){who.textContent=q.slice(0,20);inp.value=q.slice(0,20)}}catch(e){}
+inp.addEventListener('input',function(){who.textContent=inp.value.trim()||'Bestie'});
+setTimeout(function(){burst(innerWidth/2,innerHeight*.45,70,3)},500);
+})();
+</script>
+</body>
+</html>
